@@ -1,4 +1,8 @@
 # why is js faster?
+# 어쩔땐 통과하고 어쩔땐 막힘.
+import sys
+input = sys.stdin.readline
+
 n = int(input())
 cnt = 0
 board = [(x//n, x % n) for x in range(n*n)]
