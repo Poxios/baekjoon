@@ -2,23 +2,13 @@ import math
 import time
 import sys
 
-INPUT = 'IEFCJ\
-FHFKC\
-FFALF\
-HFGCF\
-HMCHH'
-
 
 def here():
-    board = []
-    for e in INPUT.split('\n'):
-        board += list(e)
-
-
-def here2():
-    board = []
-    for e in INPUT.split('\n'):
-        board.append(list(e))
+    board = [True in range(10**6)]
+    cnt = 0
+    for v in board:
+        if v == True:
+            cnt += 1
 
 
 start = time.time()
