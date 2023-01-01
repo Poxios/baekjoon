@@ -41,8 +41,6 @@ while True:
 
     # 다음 칸이 벽이거나 내 몸이면 끝
     if (not 0 <= (nx := x+dx[direction]) < n) or (not 0 <= (ny := y+dy[direction]) < n) or board[(p := nx*n+ny)] == 2:
-        print('end! next is:', (nx, ny), direction, board[p])
-        print(my_body)
         break
     # 다음 칸이 사과이면 꼬리 보존, 다음 칸이 공기면 꼬리 삭제
     if board[p] == 0:
