@@ -1,3 +1,4 @@
+# 기획 실패: 어차피 bfs로 최근접 먹을 수 있는 물고기를 알 수 있어서 따로 min 계산 할 필요가 없었다.
 import sys
 from collections import deque
 input = sys.stdin.readline
