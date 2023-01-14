@@ -1,43 +1,35 @@
-import sys
-input = sys.stdin.readline
-for _ in range(int(input())):
+import io
+import os
+# import sys
+from collections import deque
+# input = sys.stdin.readline
+input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
+T = int(input())
+
+for _ in range(T):
     n, k = map(int, input().split())
-    build_time = list(map(int, input().rstrip().split()))
-    edge_count = [-1]+[0]*(n)  # 맨 처음껀 제외하고 검사해라
+    time = [-1]+list(map(int, input().split()))
     order = [[] for _ in range(n+1)]
+    edge_count = [0]*(n+1)
+    dp = [0]*(n+1)
+
     for _ in range(k):
-        front, rear = map(int, input().split())
-        edge_count[rear] += 1
-        order[front].append(rear)
-    final_building = int(input())
-    stack = [[idx for idx, x in enumerate(edge_count) if x == 0]]
-    win = False
-    for s in stack[0]:
-        if s == final_building:
-            print(build_time[final_building-1])
-            win = True
-            break
-    if win:
-        continue
-    answer = 0
-    while stack:
-        cadidate = stack.pop()
-        max_building_time = 0
-        stack_candidate = []
-        for i in cadidate:
-            max_building_time = max(max_building_time, build_time[i-1])
-            for j in order[i]:
-                edge_count[j] -= 1
-                if edge_count[j] == 0:
-                    # 승리조건이면 이번 턴 끝나고 끝
-                    if j == final_building:
-                        win = True
-                    stack_candidate.append(j)
-            if win:
-                break
-        if stack_candidate:
-            stack.append(stack_candidate)
-        answer += max_building_time
-        if win:
-            break
-    print(answer+build_time[final_building-1])
+        a, b = map(int, input().split())
+        order[a].append(b)
+        edge_count[b] += 1
+
+    q = deque()
+    for i in range(1, n+1):
+        if edge_count[i] == 0:
+            dp[i] = time[i]  # 혼자 엄청 길 수도 있음.
+            q.append(i)
+
+    while q:
+        build_idx = q.popleft()
+        for i in order[build_idx]:
+            dp[i] = max(dp[i], dp[build_idx]+time[i])  # 자체로 지어지는 시간이 길면 그냥 둠
+            edge_count[i] -= 1
+            if edge_count[i] == 0:
+                q.append(i)
+
+    print(dp[int(input())])
